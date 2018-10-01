@@ -1,16 +1,21 @@
 package br.usjt.arqsw18.pipoca.model.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.usjt.arqsw18.pipoca.model.dao.FilmeDAO;
 import br.usjt.arqsw18.pipoca.model.entity.Filme;
-import br.usjt.arqsw18.pipoca.model.entity.Genero;
 
+@Service //Para que a injeção dependencia possa acontecer
 public class FilmeService {
 	private FilmeDAO dao;
 	
-	public FilmeService() {
-		dao = new FilmeDAO();
+	@Autowired
+	public FilmeService(FilmeDAO fdao) {
+		dao = fdao;
 	}
 	
 	public Filme buscarFilme(int id) throws IOException{
@@ -20,10 +25,15 @@ public class FilmeService {
 	public Filme inserirFilme(Filme filme) throws IOException {
 		int id = dao.inserirFilme(filme);
 		filme.setId(id);
-		GeneroService service = new GeneroService();
-		Genero genero = service.buscarGenero(filme.getGenero().getId());
-		filme.setGenero(genero);
 		return filme;
+	}
+
+	public ArrayList<Filme> listarFilmes(String chave) throws IOException{
+		return dao.listarFilmes(chave);
+	}
+
+	public ArrayList<Filme> listarFilmes() throws IOException{
+		return dao.listarFilmes();
 	}
 
 }

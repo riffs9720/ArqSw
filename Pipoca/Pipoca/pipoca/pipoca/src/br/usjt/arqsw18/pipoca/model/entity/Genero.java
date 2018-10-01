@@ -1,7 +1,5 @@
 package br.usjt.arqsw18.pipoca.model.entity;
 
-import javax.validation.constraints.NotNull;
-
 public class Genero {
 	private int id;
 	private String nome;
